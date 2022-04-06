@@ -178,6 +178,24 @@ Q타입은 컴파일 시점에 자동 생성되므로 버전관리(Git)에 포�
 앞서 설정에서 생성 위치를 gradle build 폴더 아래 생성되도록 했기 때문에 git에 포함하지 않도록 했다.
 
 
+<br/>
+
+---
+
++) unknown Entity
+
+테스트 시 persist 에 unknown Entity Hello 하고 에러가 뜨면 
+
+```java
+
+@SpringBootApplication
+@EntityScan(basePackages = {"entity"}) // 이 부분 추가
+public class PracQueryDslApplication {
+
+```
+
+스프링 부트에서 패키지 스캔을 하는데, @EntityScan의 기본 패키지 설정 위치가 @SpringBootApplication이 있는 위치라고 생각
+
 
 
 
