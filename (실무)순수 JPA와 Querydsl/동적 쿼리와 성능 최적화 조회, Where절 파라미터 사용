@@ -1,3 +1,6 @@
+
+### 동적 쿼리와 성능 최적화 조회 - Where절 파라미터 사용
+
 ```java
 
 public List<MemberTeamDto> search(MemberSearchCondition condition) {
@@ -35,6 +38,8 @@ private BooleanExpression ageLoe(Integer ageLoe) {
     return ageLoe != null ? member.age.loe(ageLoe) : null;
 
 ```
+
+--- 
 
 <br/>
 
@@ -83,33 +88,33 @@ ageGoe()가 null이더라도 무시하기 때문에 안전하게 조합할 수 �
 
 ```java
 
-private BooleanBuilder usernameEq(String username) {
-  return nullSafeBuilder(() -> member.username.eq(username));
-}
+        private BooleanBuilder usernameEq(String username) {
+          return nullSafeBuilder(() -> member.username.eq(username));
+        }
 
-private BooleanBuilder teamNameEq(String teamName) {
-  return nullSafeBuilder(() -> team.name.eq(teamName));
-}
+        private BooleanBuilder teamNameEq(String teamName) {
+          return nullSafeBuilder(() -> team.name.eq(teamName));
+        }
 
-private BooleanBuilder ageGoe(Integer ageGoe) {
-  return nullSafeBuilder(() -> member.age.goe(ageGoe));
-}
+        private BooleanBuilder ageGoe(Integer ageGoe) {
+          return nullSafeBuilder(() -> member.age.goe(ageGoe));
+        }
 
-private BooleanBuilder ageLoe(Integer ageLoe) {
-  return nullSafeBuilder(() -> member.age.loe(ageLoe));
-}
+        private BooleanBuilder ageLoe(Integer ageLoe) {
+          return nullSafeBuilder(() -> member.age.loe(ageLoe));
+        }
 
-private BooleanBuilder nullSafeBuilder(Supplier<BooleanExpression> f) {
-  try {
-    return new BooleanBuilder(f.get());
-  } catch (Exception e) {
-    return new BooleanBuilder();
-  }
-}
+        private BooleanBuilder nullSafeBuilder(Supplier<BooleanExpression> f) {
+          try {
+            return new BooleanBuilder(f.get());
+          } catch (Exception e) {
+            return new BooleanBuilder();
+          }
+        }
 
-private BooleanBuilder ageBetween(Integer ageLoe, Integer ageGoe) {
-  return ageLoe(ageLoe).and(ageGoe(ageGoe));
-}
+        private BooleanBuilder ageBetween(Integer ageLoe, Integer ageGoe) {
+          return ageLoe(ageLoe).and(ageGoe(ageGoe));
+        }
 
 ```
 
