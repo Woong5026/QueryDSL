@@ -10,7 +10,9 @@
 public class MemberJPARepository {
 
     private final EntityManager em;
-
+    
+    //@RequiredArgsConstructor를 사용하면 생성자를 따로 만들지 않아도 자동으로 bean이 주입된다.
+    //private final로 여러가지 bean을 생성해도 알아서 모두 주입된다.
     public MemberJPARepository(EntityManager em) {
         this.em = em;
     }
