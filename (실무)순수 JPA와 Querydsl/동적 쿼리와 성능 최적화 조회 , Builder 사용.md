@@ -1,3 +1,8 @@
+이번 장은 QueryDSL을 이용한 동적쿼리처리방법과 Dto를 이용한 성능 최적화를 만들어보겠다
+
+Member와 Team에서 원하는 정보만 가져올 수 있도록 MemberTeamDto 생성
+
+
 * 조회용 DTO 추가
 
 ```java
@@ -22,6 +27,16 @@ public class MemberTeamDto {
 }
 
 ```
+
++) @QueryProjection
+
+@QueryProjection을 이용하면 불변 객체 선언, 생성자를 그대로 사용할 수 있기 때문에 권장되는 패턴
+
+이 방식은 new QDTO(QType의 클래스를 생성)로 사용하기 때문에 런타임 에러뿐만 <br/>
+아니라 컴파일 시점에서도 에러를 잡아주고, 파라미터로도 확인할 수 있다는 장점이 있다
+
+DTO는 Repository 계층의 조회 용도뿐만 아니라 Service, Controller 모두 사용되기 때문에 <br/>
+@QueryProjection 어노테이션을 DTO에 적용시키는 순간, 모든 계층에서 쓰이는 DTO가 Querydsl에 의존성을 가지는 단점도 있다
 
 <br/>
 
@@ -72,8 +87,10 @@ public List<MemberTeamDto> searchByBuilder(MemberSearchCondition condition){
                         team.id.as("teamId"),
                         team.name.as("teamName")
                 ))
-                .from(member)
-                .leftJoin(member.team, team)
+                // dto와 member의 정보연동은 QMemberTeamDto의 정보와 QMember의 정보를 자동으로 조회하기에
+                // .from(member)의 member와 select 내의 QMemberTeamDto를 자동으로 매핑해준다
+                .from(member) 
+                .leftJoin(member.team, team) // team의 데이터도 검색조건에 있기에 조인
                 .where(builder)
                 .fetch();
 
@@ -81,7 +98,7 @@ public List<MemberTeamDto> searchByBuilder(MemberSearchCondition condition){
 
 ```
 
-+) username, teamName과 같은 String 타입의 경우 null, "" 모두 고려해주기 위해 StringUtils.hasText()를 사용한다.
++) username, teamName과 같은 String 타입의 경우 null, "" 이 들어올 수도 있기 때문에 StringUtils.hasText()를 사용한다.
 
 (예제에서는 StringUtils를 static import 하였다)
 
