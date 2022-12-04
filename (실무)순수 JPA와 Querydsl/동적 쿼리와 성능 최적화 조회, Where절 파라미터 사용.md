@@ -81,6 +81,29 @@ private BooleanBuilder ageBetween(Integer ageGoe, Integer ageLoe) {
 
 ageGoe()가 null이더라도 무시하기 때문에 안전하게 조합할 수 있다.
 
+
+```java
+
+public List<MemberTeamDto> search(MemberSearchCondition condition) {
+        return queryFactory
+                .select(new QMemberTeamDto(
+                        member.id.as("memberId"),
+                        member.username,
+                        member.age,
+                        team.id,
+                        team.name))
+                .from(member)
+                .leftJoin(member.team, team)
+                .where(usernameEq(condition.getUsername()),
+                        teamNameeEq(condition.getTeamName()),
+                        ageBetween(condition.getAgeGoe(), condition.getAgeLoe()) // 위의 예시와 다르게 메서드를 재조합가능
+                )
+
+                .fetch();
+    }
+
+```
+
 <br/>
 
 2. 각 메서드마다 BooleanBuilder 모두 사용
