@@ -104,6 +104,17 @@ public List<MemberTeamDto> searchByBuilder(MemberSearchCondition condition){
 
 <br/>
 
++) 엔티티를 먼저 조회하지 않고, 바로 DTO로 조회하는 경우?
+
+위 예제를 보면 member나 team으로 조회하지 않고 별도의 dto를 생성해서 만드는데 <br/>
+api스펙 변경이 되는것도 아니고 검색조건만 만드는 건데 dto로 조회하는 이유가 있을까?
+
+DTO로 직접 조회하는 이유는 엔티티를 무시하고, **조회용 모델을 바로 만드는 것이 목표**
+따라서 중간에 번거롭게 엔티티를 만들 이유가 없다
+
+
+<br/>
+
 * 테스트
 
 ```java
