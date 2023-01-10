@@ -88,6 +88,17 @@ public class MemberController {
 
 ```
 
-http://localhost:8080/v1/members?teamName=teamB&ageGoe=31&ageLoe=35 처럼 쿼리 파라미터로 조건을 추가해서 테스트할 수 있다.
-
+http://localhost:8080/v1/members?teamName=teamB&ageGoe=31&ageLoe=35 처럼 쿼리 파라미터로 조건을 추가해서 테스트할 수 있다. <br/>
 -> postman을 사용하면 편리하다.
+
+<br/>
+
++) <br/>
+Q) 문득 pathvariable이나 RequestParam을 파라미터로 넣지 않았는데 주소창에 ? 뒤에 조건을 붙여서 매핑을 해주는 걸까? 라는 의문이 생겼다
+
+A) 답은 @ModelAttribute가 생략되어 있는 것 <br/>
+@ModelAttribute는 파라미터로 받은 객체에 요청파라미터를 바인딩하고 set하는 작업을 해주는 것 <br/>
+이전에 MVC에서 배웠는데 갑자기 기억이 나질 않았다. 이래서 계속적인 반복과 코드 하나하나에 대한 의문이 중요한 것 같다
+
+
+
